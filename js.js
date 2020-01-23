@@ -74,7 +74,7 @@ var plus1_v3 = liftf(add)(1);
 //double(11) //22
 
 function twice(bfunc) {
-  return function unfunction(unarg) {
+  return function (unarg) {
     return bfunc(unarg, unarg)
   }
 }
@@ -83,4 +83,4 @@ var square = twice(mul)
 
 
 
-log(twice(add)(11))
+log(twice(add)(12))
