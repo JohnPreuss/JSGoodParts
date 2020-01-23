@@ -61,14 +61,26 @@ function curry2(binary, first) {
 
 //Three ways to increment/add 1 to a number
 
-var plus1 = addf(1)
-
-var plus1_v2 = curry(add, 1)
-
-var plus1_v3 = liftf(add)(1)
+var plus1 = addf(1);
+var plus1_v2 = curry(add, 1);
+var plus1_v3 = liftf(add)(1);
 //log(plus1_v3(17))
 
 
 
+//function twice takes a binary and returns a unary that passes its argument
+//to the binary twice
+//var doubl = twice(add);
+//double(11) //22
 
-log(plus1_v3(17))
+function twice(bfunc) {
+  return function unfunction(unarg) {
+    return bfunc(unarg, unarg)
+  }
+}
+var doubl = twice(add)
+var square = twice(mul)
+
+
+
+log(twice(add)(11))
