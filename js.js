@@ -16,6 +16,10 @@ function sub(x, y) {
   return x - y;
 }
 
+function divide(x, y) {
+  return x/y;
+}
+
 function mul(x, y) {
   return x * y;
 }
@@ -74,13 +78,44 @@ var plus1_v3 = liftf(add)(1);
 //double(11) //22
 
 function twice(bfunc) {
-  return function (unarg) {
-    return bfunc(unarg, unarg)
+  return function (a) {
+    return bfunc(a, a)
   }
 }
+
 var doubl = twice(add)
 var square = twice(mul)
 
 
+//Write reverse, a function that reverses the arguments of a binary function
+var bus = reverse(sub);
+bus(3, 2)  //-1
 
-log(twice(add)(12))
+function reverse(bfunc) {
+  return function(a, b) {
+    return bfunc(b, a)
+  }
+}
+
+//Write a function composeu that takes two unary functions and returns a unary function that calls them both.
+//composeu(doubl,square)(5) = 100
+
+function composeu(u1, u2) {
+  return function(a) {
+    return u2(u1(a)) ;
+  }
+}
+
+
+//take two binary functions and returns a function that calls them both.
+//function composeb(add, mul)(2, 3, 7) returns 35
+
+function composeb(b1, b2) {
+  return function(a, b, c) {
+    return b2(b1(a,b),c);
+  }
+}
+
+
+
+log(composeb(add,mul)(2,3,7))
