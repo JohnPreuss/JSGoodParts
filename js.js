@@ -89,7 +89,7 @@ var square = twice(mul)
 
 //Write reverse, a function that reverses the arguments of a binary function
 var bus = reverse(sub);
-bus(3, 2)  //-1
+// bus(3, 2) = -1
 
 function reverse(bfunc) {
   return function(a, b) {
@@ -118,4 +118,95 @@ function composeb(b1, b2) {
 
 
 
-log(composeb(add,mul)(2,3,7))
+// limit function that allows a binary function to be called a limited number of times
+
+
+var add_ltd = limit2(add, 3)
+// add_ltd(3,4) = 7
+// add_ltd(3,5) = undefined
+
+//My logic (refined after seeing solution)
+function limit2(bfunc, a) {
+  var numberoftimesrun = 0
+  return function(x, y) {
+    if (numberoftimesrun < a) {
+      numberoftimesrun += 1
+    return bfunc(x, y) ;
+  }
+    else {return undefined}
+  }
+}
+
+
+//Caroline's Solution
+function limit(fn, limit) {
+  var called = 0
+  return function(a, b) {
+    if (called == limit) return undefined;
+    called += 1
+    return fn(a, b)
+  }
+}
+
+
+//Tom's Solution
+function limit(func, limit) {
+  return function(x,y) {
+    if(limit > 0) {
+      limit -= 1;
+      return func(x,y);
+    } else {
+      return undefined;
+    }
+  }
+}
+
+
+// write a from function that produces a generator that will produce a series of values
+var index = from2(11);
+// index() = 0
+// index() = 1
+// index() = 2
+
+//My thinking
+function from(a) {
+  var current = a
+  return function() {
+      current += 1
+    return current;
+
+  }
+}
+
+//JSG Solution
+function from2(a) {
+  return function() {
+      current = a
+      a += 1
+    return current;
+  }
+}
+
+
+//Tom's solution
+function form(x) {
+  var call = -1;
+  return function() {
+    return add(x,call += 1);
+  }
+}
+
+
+
+
+//Questions:
+// Why doesn't index() continue starting at from(0)??
+// When does the count (i.e. "next" or "current" variable) start over? each session?
+
+
+
+log(add_ltd(3,4))
+log(add_ltd(3,5))
+log(add_ltd(3,4))
+log(add_ltd(3,5))
+log(index())
